@@ -362,42 +362,67 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
+export interface ApiFilmFilm extends Schema.CollectionType {
+  collectionName: 'films';
   info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'Product';
+    singularName: 'film';
+    pluralName: 'films';
+    displayName: 'film';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    released: Attribute.Date;
+    director: Attribute.String;
+    plot: Attribute.Text;
+    slug: Attribute.String;
+    reviews: Attribute.Relation<
+      'api::film.film',
+      'oneToMany',
+      'api::review.review'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::film.film', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::film.film', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Schema.CollectionType {
+  collectionName: 'reviews';
+  info: {
+    singularName: 'review';
+    pluralName: 'reviews';
+    displayName: 'review';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    Title: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-        maxLength: 70;
-      }>;
-    RichTextMd: Attribute.RichText;
-    RichTextBlocks: Attribute.Blocks;
-    Type: Attribute.Enumeration<['Computers', 'Accessories', 'Others']>;
-    ProductionDate: Attribute.Date;
-    MediaField: Attribute.Media;
-    isHidden: Attribute.Boolean;
+    review: Attribute.Text;
+    reviewer: Attribute.String;
+    film: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'api::film.film'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::product.product',
+      'api::review.review',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::product.product',
+      'api::review.review',
       'oneToOne',
       'admin::user'
     > &
@@ -836,7 +861,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::product.product': ApiProductProduct;
+      'api::film.film': ApiFilmFilm;
+      'api::review.review': ApiReviewReview;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
