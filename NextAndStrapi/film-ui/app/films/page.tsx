@@ -63,7 +63,7 @@ const Films = () => {
           <Link
             key={film.id}
             className="bg-white shadow-md rounded-lg overflow-hidden"
-            href={"films/" + film.id}
+            href={`/films/${film.id}`}
           >
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-2">
