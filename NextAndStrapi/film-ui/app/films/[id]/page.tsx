@@ -3,6 +3,7 @@ import axiosInstance from "@/utils/axiosConfig";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/utils/authContext";
 import { useRouter } from "next/navigation";
+import { formatDistanceToNow } from "date-fns";
 
 interface Film {
   id: number;
@@ -12,6 +13,20 @@ interface Film {
     director: string;
     plot: string | null;
     slug: string | null;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    reviews: {
+      data: Review[];
+    };
+  };
+}
+
+interface Review {
+  id: number;
+  attributes: {
+    review: string;
+    reviewer: string;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
@@ -33,7 +48,7 @@ const SingleFilm = (params: any) => {
   useEffect(() => {
     const fetchFilm = async () => {
       try {
-        const response = await axiosInstance.get(`/films/${id}`);
+        const response = await axiosInstance.get(`/films/${id}/?populate=*`);
         setFilm(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -44,7 +59,25 @@ const SingleFilm = (params: any) => {
     if (id) {
       fetchFilm();
     }
-  }, [id]);
+  }, [id, review]);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.post("/reviews", {
+        data: {
+          review: review.value,
+          reviewer: user?.username,
+          film: film?.id,
+        },
+      });
+
+      // Clear the review input field
+      setReview({ value: "" });
+    } catch (error) {
+      console.error("error with request", error);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -54,9 +87,10 @@ const SingleFilm = (params: any) => {
     setReview({ value: e.target.value });
   };
 
-  // if (!isLoggedIn) {
-  //   router.push("/");
-  // }
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
 
   return (
     <div className="px-20 py-8">
@@ -64,10 +98,12 @@ const SingleFilm = (params: any) => {
       <p className="text-gray-600 mb-2">Released: {film.attributes.released}</p>
       <p className="text-gray-600 mb-2">Director: {film.attributes.director}</p>
       <p className="text-gray-600 mb-4">Plot: {film.attributes.plot}</p>
+
+      {/* Add Review Form */}
       {user ? (
         <div className="mb-8">
-          <span className="block text-lg font-bold mb-2">Reviews</span>
-          <form>
+          <span className="block text-lg font-bold mb-2">Add Review</span>
+          <form onSubmit={handleSubmit}>
             <textarea
               value={review.value}
               onChange={handleChange}
@@ -81,6 +117,35 @@ const SingleFilm = (params: any) => {
               Add Review
             </button>
           </form>
+          {/* Display Reviews */}
+          <div className="mt-8">
+            {film.attributes.reviews.data.length > 0 ? (
+              <>
+                <span className="block text-lg font-bold mb-2">Reviews</span>
+                {film.attributes.reviews.data.map((review: Review) => (
+                  <div
+                    key={review.id}
+                    className="bg-gray-100 p-4 rounded-lg mb-4"
+                  >
+                    <p className="text-gray-800 mb-2">
+                      <span className="font-semibold">Review:</span>{" "}
+                      {review.attributes.review}
+                    </p>
+                    <p className="text-gray-800 mb-2">
+                      <span className="font-semibold">Reviewer:</span>{" "}
+                      {review.attributes.reviewer}
+                    </p>
+                    <p className="text-gray-600 text-sm">
+                      <span className="font-semibold"></span>
+                      {formatDate(review.attributes.publishedAt)}
+                    </p>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <div className="mt-8 text-gray-600">No reviews available</div>
+            )}
+          </div>
         </div>
       ) : (
         ""
