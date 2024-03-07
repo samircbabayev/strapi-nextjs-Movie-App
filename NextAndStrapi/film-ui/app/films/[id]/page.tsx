@@ -119,7 +119,8 @@ const SingleFilm = (params: any) => {
           </form>
           {/* Display Reviews */}
           <div className="mt-8">
-            {film.attributes.reviews.data.length > 0 ? (
+            {film.attributes.reviews &&
+            film.attributes.reviews.data.length > 0 ? (
               <>
                 <span className="block text-lg font-bold mb-2">Reviews</span>
                 {film.attributes.reviews.data.map((review: Review) => (

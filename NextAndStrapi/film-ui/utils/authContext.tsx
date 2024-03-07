@@ -72,9 +72,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsLoggedIn(true); // Set isLoggedIn to true after successful login
       setLoading(false);
       console.log("Login success:", response.data);
+      router.push("/");
     } catch (error) {
-      console.error("Login failed:", error);
-      throw error;
+      alert("Login failed: " + error.response.data.error.message);
     }
   };
 

@@ -1,33 +1,10 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { useAuth } from "@/utils/authContext"; // Adjust the path as per your file structure
-import axiosInstance from "@/utils/axiosConfig";
-import Cookies from "js-cookie";
+import { useAuth } from "@/utils/authContext";
 
 const Navbar = () => {
   const { user, login, logout } = useAuth();
-  const [formData, setFormData] = useState({
-    identifier: "",
-    password: "",
-  });
-
-  const handleChange = (e: any) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      await login(formData);
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
-  };
-
   const handleLogout = () => {
     logout();
   };
@@ -68,32 +45,20 @@ const Navbar = () => {
             </div>
           </>
         ) : (
-          <form onSubmit={handleSubmit} className="flex items-center space-x-2">
-            <input
-              type="text"
-              name="identifier"
-              onChange={handleChange}
-              value={formData.identifier}
-              placeholder="Username"
-              required
-              className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:border-blue-500"
-            />
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              value={formData.password}
-              placeholder="Password"
-              required
-              className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:border-blue-500"
-            />
-            <button
-              type="submit"
+          <>
+            <Link
               className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 focus:outline-none"
+              href={"/login"}
             >
               Login
-            </button>
-          </form>
+            </Link>
+            <Link
+              className="bg-black text-white px-4 py-1 rounded hover:bg-gray-700 focus:outline-none"
+              href={"/register"}
+            >
+              Register
+            </Link>
+          </>
         )}
       </div>
     </nav>
