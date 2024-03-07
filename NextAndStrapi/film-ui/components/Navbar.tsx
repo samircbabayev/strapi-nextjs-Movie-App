@@ -1,28 +1,16 @@
 "use client";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useAuth } from "@/utils/authContext"; // Adjust the path as per your file structure
 import axiosInstance from "@/utils/axiosConfig";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const { user, login, logout } = useAuth();
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
   });
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check if token is set
-    const jwtToken = Cookies.get("jwt");
-    if (jwtToken) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, []);
 
   const handleChange = (e: any) => {
     setFormData({
@@ -34,31 +22,14 @@ const Navbar = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/auth/local", {
-        identifier: formData.identifier,
-        password: formData.password,
-      });
-      console.log("Login success:", response.data);
-
-      // Store JWT token in a cookie
-      Cookies.set("id", response.data.user.id);
-      Cookies.set("username", response.data.user.username);
-      Cookies.set("jwt", response.data.jwt);
-
-      setIsAuthenticated(true);
+      await login(formData);
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
 
-  const logout = () => {
-    // Clear token from cookies
-    Cookies.remove("id");
-    Cookies.remove("username");
-    Cookies.remove("jwt");
-
-    setIsAuthenticated(false); // Set authentication state to false
-    // router.push("/"); // Redirect to home page after logout
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -81,7 +52,7 @@ const Navbar = () => {
         >
           Films
         </Link>
-        {isAuthenticated ? (
+        {user ? (
           <>
             <Link
               href={"/profile"}
@@ -90,7 +61,7 @@ const Navbar = () => {
               Profile
             </Link>
             <div
-              onClick={logout}
+              onClick={handleLogout}
               className="text-lg text-gray-800 hover:text-blue-600 transition duration-300 ease-in-out cursor-pointer"
             >
               Logout

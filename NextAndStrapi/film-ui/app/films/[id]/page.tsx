@@ -1,7 +1,8 @@
 "use client";
 import axiosInstance from "@/utils/axiosConfig";
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { useAuth } from "@/utils/authContext";
+import { useRouter } from "next/navigation";
 
 interface Film {
   id: number;
@@ -20,10 +21,11 @@ interface Film {
 const SingleFilm = (params: any) => {
   const id = params.params.id;
 
+  const { user, isLoggedIn } = useAuth();
+  const router = useRouter();
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [review, setReview] = useState({
     value: "",
   });
@@ -44,26 +46,6 @@ const SingleFilm = (params: any) => {
     }
   }, [id]);
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      try {
-        const jwtToken = Cookies.get("jwt");
-        console.log(jwtToken);
-
-        if (jwtToken) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
-      } catch (error) {
-        setError("Error fetching film");
-        setLoading(false);
-      }
-    };
-
-    fetchToken();
-  }, [isAuthenticated]);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!film) return <div>No film found</div>;
@@ -72,13 +54,17 @@ const SingleFilm = (params: any) => {
     setReview({ value: e.target.value });
   };
 
+  // if (!isLoggedIn) {
+  //   router.push("/");
+  // }
+
   return (
     <div className="px-20 py-8">
       <h1 className="text-3xl font-bold mb-4">{film.attributes.title}</h1>
       <p className="text-gray-600 mb-2">Released: {film.attributes.released}</p>
       <p className="text-gray-600 mb-2">Director: {film.attributes.director}</p>
       <p className="text-gray-600 mb-4">Plot: {film.attributes.plot}</p>
-      {isAuthenticated ? (
+      {user ? (
         <div className="mb-8">
           <span className="block text-lg font-bold mb-2">Reviews</span>
           <form>
