@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/utils/authContext";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Film {
   id: number;
@@ -74,6 +76,11 @@ const SingleFilm = (params: any) => {
 
       // Clear the review input field
       setReview({ value: "" });
+
+      // Show success notification
+      if (response) {
+        toast.success("Review added successfully");
+      }
     } catch (error) {
       console.error("error with request", error);
     }

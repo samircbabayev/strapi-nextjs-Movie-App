@@ -1,24 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/utils/authContext";
-import Image from "next/image";
 import axiosInstance from "@/utils/axiosConfig";
 
 const Profile = () => {
   const { user } = useAuth();
-  console.log(user);
 
   const [data, setData] = useState(null);
-  console.log(data);
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchData = async () => {
       try {
         const response = await axiosInstance.get(`/Users/me?populate=*`);
         setData(response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
-    fetch();
+    fetchData();
   }, []);
 
   return (
@@ -28,17 +27,17 @@ const Profile = () => {
         <div>
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
-          {/* {data && data.pic.formats.medium.url && (
-            <div>
-              <p>Profile Picture:</p>
-              <Image
-                src={data.pic.formats.medium.url}
+          {data && data.pic && (
+            <div className="pt-6">
+              <img
+                src={`http://localhost:1337${data.pic.formats.medium.url}`}
                 alt="Profile Picture"
-                width={200}
-                height={200}
+                className="rounded-xl"
+                width={100}
+                height={100}
               />
             </div>
-          )} */}
+          )}
         </div>
       ) : (
         <p>Loading...</p>
