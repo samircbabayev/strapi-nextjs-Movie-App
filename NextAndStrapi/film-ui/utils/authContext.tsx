@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoggedIn(false); // Set isLoggedIn to false after logout
     setLoading(false);
     // Redirect the user to the login page after logout
-    // router.push("/login");
+    router.push("/login");
   };
 
   return (
