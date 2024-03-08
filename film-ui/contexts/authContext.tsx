@@ -19,8 +19,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  isLoggedIn: boolean; // New field
-  login: (formData: any) => Promise<void>;
+  isLoggedIn: boolean;
+  login: (formData: any) => Promise<{ success: boolean; response: any }>; // Adjusted return type
   logout: () => void;
 }
 
@@ -28,7 +28,9 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
   isLoggedIn: false,
-  login: async () => {},
+  login: async (formData: any) => {
+    return { success: false, response: null };
+  }, // Adjusted login function
   logout: () => {},
 });
 
@@ -72,9 +74,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsLoggedIn(true); // Set isLoggedIn to true after successful login
       setLoading(false);
       console.log("Login success:", response.data);
-      router.push("/");
+      return { success: true, response }; // Return success flag along with response
     } catch (error) {
-      alert("Login failed: " + error.response.data.error.message);
+      throw error; // Throw error on failure
     }
   };
 
