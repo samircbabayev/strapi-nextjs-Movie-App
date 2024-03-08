@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "@/components/Loading";
 
 interface Film {
   id: number;
@@ -13,13 +14,22 @@ interface Film {
     title: string;
     released: string;
     director: string;
-    plot: string | null;
+    plot: { type: string; children: { type: string; text: string }[] }[];
     slug: string | null;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
     reviews: {
       data: Review[];
+    };
+    poster: {
+      data: {
+        large: {
+          url: string; // URL for the large poster image
+          width: number;
+          height: number;
+        };
+      };
     };
   };
 }
@@ -46,6 +56,8 @@ const SingleFilm = (params: any) => {
   const [review, setReview] = useState({
     value: "",
   });
+
+  console.log(film);
 
   useEffect(() => {
     const fetchFilm = async () => {
@@ -86,6 +98,7 @@ const SingleFilm = (params: any) => {
     }
   };
 
+  if (loading) return <Loading />;
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!film) return <div>No film found</div>;
@@ -100,64 +113,80 @@ const SingleFilm = (params: any) => {
   };
 
   return (
-    <div className="px-20 py-8">
-      <h1 className="text-3xl font-bold mb-4">{film.attributes.title}</h1>
-      <p className="text-gray-600 mb-2">Released: {film.attributes.released}</p>
-      <p className="text-gray-600 mb-2">Director: {film.attributes.director}</p>
-      <p className="text-gray-600 mb-4">Plot: {film.attributes.plot}</p>
-
-      {/* Add Review Form */}
-      {user ? (
-        <div className="mb-8">
-          <span className="block text-lg font-bold mb-2">Add Review</span>
-          <form onSubmit={handleSubmit}>
-            <textarea
-              value={review.value}
-              onChange={handleChange}
-              placeholder="Add your review"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
-            ></textarea>
-            <button
-              type="submit"
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-            >
-              Add Review
-            </button>
-          </form>
-          {/* Display Reviews */}
-          <div className="mt-8">
-            {film.attributes.reviews &&
-            film.attributes.reviews.data.length > 0 ? (
-              <>
-                <span className="block text-lg font-bold mb-2">Reviews</span>
-                {film.attributes.reviews.data.map((review: Review) => (
-                  <div
-                    key={review.id}
-                    className="bg-gray-100 p-4 rounded-lg mb-4"
-                  >
-                    <p className="text-gray-800 mb-2">
-                      <span className="font-semibold">Review:</span>{" "}
-                      {review.attributes.review}
-                    </p>
-                    <p className="text-gray-800 mb-2">
-                      <span className="font-semibold">Reviewer:</span>{" "}
-                      {review.attributes.reviewer}
-                    </p>
-                    <p className="text-gray-600 text-sm">
-                      <span className="font-semibold"></span>
-                      {formatDate(review.attributes.publishedAt)}
-                    </p>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <div className="mt-8 text-gray-600">No reviews available</div>
-            )}
-          </div>
+    <div className="px-20 py-8 bg-gray-900 lg:h-screen">
+      <div className="bg-black bg-opacity-75 p-10 rounded-lg">
+        <h1 className="text-3xl font-bold mb-4 text-white">
+          {film.attributes.title}
+        </h1>
+        <p className="text-gray-200 mb-2">
+          Released: {film.attributes.released}
+        </p>
+        <p className="text-gray-200 mb-2">
+          Director: {film.attributes.director}
+        </p>
+        <div className="text-gray-200 mb-4">
+          Plot:{" "}
+          {film.attributes.plot.map((paragraph, index) => (
+            <p key={index}>{paragraph.children[0].text}</p>
+          ))}
         </div>
-      ) : (
-        ""
-      )}
+        {/* Add Review Form */}
+        {user ? (
+          <div className="mb-8">
+            <span className="block text-lg font-bold mb-2 text-white">
+              Add Review
+            </span>
+            <form onSubmit={handleSubmit}>
+              <textarea
+                value={review.value}
+                onChange={handleChange}
+                placeholder="Add your review"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+              ></textarea>
+              <button
+                type="submit"
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+              >
+                Add Review
+              </button>
+            </form>
+            {/* Display Reviews */}
+            <div className="mt-8">
+              {film.attributes.reviews &&
+              film.attributes.reviews.data.length > 0 ? (
+                <>
+                  <span className="block text-lg font-bold mb-2 text-white">
+                    Reviews
+                  </span>
+                  {film.attributes.reviews.data.map((review: Review) => (
+                    <div
+                      key={review.id}
+                      className="bg-gray-100 bg-opacity-50 p-4 rounded-lg mb-4"
+                    >
+                      <p className="text-gray-800 mb-2">
+                        <span className="font-semibold">Review:</span>{" "}
+                        {review.attributes.review}
+                      </p>
+                      <p className="text-gray-800 mb-2">
+                        <span className="font-semibold">Reviewer:</span>{" "}
+                        {review.attributes.reviewer}
+                      </p>
+                      <p className="text-gray-200 text-sm">
+                        <span className="font-semibold"></span>
+                        {formatDate(review.attributes.publishedAt)}
+                      </p>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="mt-8 text-gray-200">No reviews available</div>
+              )}
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

@@ -368,6 +368,7 @@ export interface ApiFilmFilm extends Schema.CollectionType {
     singularName: 'film';
     pluralName: 'films';
     displayName: 'film';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -376,13 +377,14 @@ export interface ApiFilmFilm extends Schema.CollectionType {
     title: Attribute.String;
     released: Attribute.Date;
     director: Attribute.String;
-    plot: Attribute.Text;
     slug: Attribute.String;
     reviews: Attribute.Relation<
       'api::film.film',
       'oneToMany',
       'api::review.review'
     >;
+    plot: Attribute.Blocks;
+    poster: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -16,9 +16,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between h-16 px-4 bg-white shadow-md md:px-20">
+    <nav className="flex items-center justify-between h-16 text-white px-4 bg-gray-900 shadow-md md:px-20">
       <div className="flex items-center space-x-4">
-        <div className="text-lg font-bold text-gray-800 hover:text-blue-600 transition duration-300 ease-in-out">
+        <div className="text-lg text-white font-bold  hover:text-blue-600 transition duration-300 ease-in-out">
           LOGO
         </div>
       </div>

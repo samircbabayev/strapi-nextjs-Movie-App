@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.hero-section {
+  background-image: url("../assets/images/hero.jpg");
+  background-size: cover;
+  background-position: center;
+}

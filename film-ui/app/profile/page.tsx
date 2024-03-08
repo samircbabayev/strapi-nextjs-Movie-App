@@ -21,7 +21,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="px-20 h-[90vh] py-10">
+    <div className="px-20 py-10 bg-gray-900 text-white h-screen">
       <h2 className="text-3xl font-bold mb-4">Profile</h2>
       {user ? (
         <div>

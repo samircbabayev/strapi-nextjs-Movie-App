@@ -4,7 +4,8 @@
   "info": {
     "singularName": "film",
     "pluralName": "films",
-    "displayName": "film"
+    "displayName": "film",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -20,9 +21,6 @@
     "director": {
       "type": "string"
     },
-    "plot": {
-      "type": "text"
-    },
     "slug": {
       "type": "string"
     },
@@ -31,6 +29,16 @@
       "relation": "oneToMany",
       "target": "api::review.review",
       "mappedBy": "film"
+    },
+    "plot": {
+      "type": "blocks"
+    },
+    "poster": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
