@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/authContext";
+import logo from "../assets/images/logo.png";
+import Image from "next/image";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -18,8 +20,8 @@ const Navbar = () => {
   return (
     <nav className="flex items-center justify-between h-16 text-white px-4 bg-gray-900 shadow-md md:px-20">
       <div className="flex items-center space-x-4">
-        <div className="text-lg text-white font-bold  hover:text-blue-600 transition duration-300 ease-in-out">
-          LOGO
+        <div>
+          <Image src={logo} alt={"logo"} className="w-20" />
         </div>
       </div>
       <div className="hidden md:flex items-center space-x-4">
@@ -79,7 +81,7 @@ const Navbar = () => {
         </button>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden fixed top-0 left-0 w-full h-full bg-white z-50">
+        <div className="md:hidden fixed top-0 left-0 w-full h-full bg-gray-900 z-50">
           <div className="flex flex-col items-center pt-16">
             <Link href="/" className="nav-link-mobile" onClick={toggleMenu}>
               Home
