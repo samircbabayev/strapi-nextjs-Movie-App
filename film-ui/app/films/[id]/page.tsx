@@ -161,7 +161,7 @@ const SingleFilm = (params: any) => {
                   {film.attributes.reviews.data.map((review: Review) => (
                     <div
                       key={review.id}
-                      className="bg-gray-100 bg-opacity-50 p-4 rounded-lg mb-4"
+                      className="bg-white p-4 rounded-lg mb-4"
                     >
                       <p className="text-gray-800 mb-2">
                         <span className="font-semibold">Review:</span>{" "}
@@ -171,7 +171,7 @@ const SingleFilm = (params: any) => {
                         <span className="font-semibold">Reviewer:</span>{" "}
                         {review.attributes.reviewer}
                       </p>
-                      <p className="text-gray-200 text-sm">
+                      <p className="text-gray-600 text-sm">
                         <span className="font-semibold"></span>
                         {formatDate(review.attributes.publishedAt)}
                       </p>
