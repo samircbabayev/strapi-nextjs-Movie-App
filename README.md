@@ -1,57 +1,28 @@
-# 🚀 Getting started with Strapi
+# Star Wars Movie Details App
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+## Overview
 
-### `develop`
+This repository contains the source code for a web application built with Next.js for the frontend, Tailwind CSS for styling, and Strapi for the backend.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+## Features
 
-```
-npm run develop
-# or
-yarn develop
-```
+- **Next.js**: Next.js is a React framework for building server-side rendered and static web applications.
+- **Tailwind CSS**: Tailwind CSS is a utility-first CSS framework for quickly building custom designs.
+- **Strapi**: Strapi is a headless CMS that provides a customizable API for managing content.
 
-### `start`
+## Getting Started
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+**Open the web application:**
+   Visit `http://localhost:3000` in your web browser to view the web application.
 
-```
-npm run start
-# or
-yarn start
-```
+## Screenshots
 
-### `build`
+![Screenshot_8-3-2024_133934_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/009f3933-ddb6-41aa-ae1d-f4eb0e4e4549)
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+![Screenshot_8-3-2024_133948_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/c26bb24d-4ed8-4cf0-964d-72921624d58c)
 
-```
-npm run build
-# or
-yarn build
-```
+![Screenshot_8-3-2024_134051_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/4494efef-dd10-4c20-9e1e-c909b8b94d98)
 
-## ⚙️ Deployment
+![Screenshot_8-3-2024_13400_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/c70b9936-552d-44a9-b492-aa10fd7bb438)
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
 
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
