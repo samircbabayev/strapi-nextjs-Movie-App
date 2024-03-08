@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "@/utils/authContext";
-import axiosInstance from "@/utils/axiosConfig";
+import { useAuth } from "@/contexts/authContext";
+import axiosInstance from "@/services/axiosConfig";
 
 const Profile = () => {
   const { user } = useAuth();

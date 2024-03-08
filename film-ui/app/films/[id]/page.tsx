@@ -1,7 +1,7 @@
 "use client";
-import axiosInstance from "@/utils/axiosConfig";
+import axiosInstance from "@/services/axiosConfig";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "@/utils/authContext";
+import { useAuth } from "@/contexts/authContext";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";

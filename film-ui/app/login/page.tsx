@@ -1,11 +1,13 @@
 "use client";
-import { useAuth } from "@/utils/authContext";
+import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
   const { user, login, logout } = useAuth();
   const [formData, setFormData] = useState({
     identifier: "",
@@ -22,13 +24,16 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await login(formData);
+      const { success, response }: any = await login(formData);
+      if (success) {
+        toast.success("Login successful"); // Toast success message
+        router.push("/"); // Redirect to home after toasting success message
+      }
     } catch (error) {
       console.error("Login failed:", error);
-      toast.error("Login failed: " + error.response.data.error.message);
+      toast.error("Login failed: " + error.response.data.error.message); // Toast error message
     }
   };
-
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <ToastContainer />

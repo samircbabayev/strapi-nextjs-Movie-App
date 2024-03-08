@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axiosInstance from "@/utils/axiosConfig";
+import axiosInstance from "@/services/axiosConfig";
 import Link from "next/link";
 
 interface Film {

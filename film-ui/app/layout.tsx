@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthProvider } from "@/utils/authContext"; // Adjust the path as per your file structure
+import { AuthProvider } from "@/contexts/authContext"; // Adjust the path as per your file structure
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
