@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the source code for a web application built with Next.js for the frontend, Tailwind CSS for styling, and Strapi for the backend.
+This repository contains the source code for a web application that provides details about Star Wars movies. The app is built using Next.js for the frontend, Tailwind CSS for styling, and Strapi for the backend.
 
 ## Features
 
@@ -12,17 +12,60 @@ This repository contains the source code for a web application built with Next.j
 
 ## Getting Started
 
-**Open the web application:**
-   Visit `http://localhost:3000` in your web browser to view the web application.
+To get started with the development of this web application, follow these steps:
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository_url>
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   cd <project_directory>
+   npm install
+   ```
+
+3. **Start the Strapi backend:**
+   - Navigate to the `films` directory:
+     ```bash
+     cd films
+     ```
+   - Install dependencies:
+     ```bash
+     npm install
+     ```
+   - Start the Strapi server:
+     ```bash
+     npm run develop
+     ```
+
+4. **Start the Next.js frontend:**
+   - Navigate to the `film-ui` directory:
+     ```bash
+     cd film-ui
+     ```
+   - Start the development server:
+     ```bash
+     npm run dev
+     ```
+
+5. **Open the web application:**
+   Visit `http://localhost:3000` in your web browser to view the Star Wars movie details app.
+
+## Folder Structure
+
+- **`/films`**: Contains the Strapi backend for managing movie data.
+- **`/film-ui`**: Contains the Next.js frontend for displaying movie details.
 
 ## Screenshots
 
-![Screenshot_8-3-2024_133934_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/009f3933-ddb6-41aa-ae1d-f4eb0e4e4549)
+![Screenshot_8-3-2024_133934_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/9804b432-055c-4553-87ee-fafe986e1ca0)
 
-![Screenshot_8-3-2024_133948_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/c26bb24d-4ed8-4cf0-964d-72921624d58c)
+![Screenshot_8-3-2024_133948_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/4380f6e8-fa8c-447c-a4c9-46a8c0cddaec)
 
-![Screenshot_8-3-2024_134051_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/4494efef-dd10-4c20-9e1e-c909b8b94d98)
+![Screenshot_8-3-2024_134051_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/b8c134e3-4dd1-48e2-b4db-85aa548b8c53)
 
-![Screenshot_8-3-2024_13400_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/c70b9936-552d-44a9-b492-aa10fd7bb438)
+![Screenshot_8-3-2024_13400_localhost](https://github.com/IsuruX98/Strapi-Nextjs-App/assets/104721314/cbaed35d-a65f-440c-af15-3254e4fb3230)
+
 
 
